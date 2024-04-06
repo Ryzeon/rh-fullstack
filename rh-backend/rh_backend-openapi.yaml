@@ -1,0 +1,66 @@
+openapi: "3.0.3"
+info:
+  title: "rh_backend API"
+  description: "rh_backend API"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /api/employees:
+    post:
+      summary: "POST api/employees"
+      operationId: "saveEmployee"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                department:
+                  type: "string"
+                salary:
+                  type: "number"
+                  format: "double"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Employee"
+  /api/employees/{id}:
+    get:
+      summary: "GET api/employees/{id}"
+      operationId: "findEmployeeById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Employee"
+components:
+  schemas:
+    Employee:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        department:
+          type: "string"
+        salary:
+          type: "number"
+          format: "double"
